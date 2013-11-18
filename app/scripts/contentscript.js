@@ -25,16 +25,24 @@ var generateUrl = function( array, pagination ) {
 // ----------------------------------
 , printImages = function( items ) {
     for( var item in items ) {
-        $('<img />').attr( 'src', items[ item ].avatar_url ).appendTo('body');
+        $('<img />')
+        	.addClass('github-avatar')
+        	.attr( 'src', items[ item ].avatar_url )
+        	.prependTo( '.' + items[ item ].login );
     }
 }
  
 // get user names from github feed page
 // ------------------------------------
 , users = unique( $('.news .alert').not('.push').find('.title a:eq(0)').map(function() {
-    var username = $(this).text();
+    var $self = $(this)
+    , username = $self.text();
+    
+    $self.addClass(username);
+
+    $self.parent().addClass('avatar-container')
     // store username
-    $(this).closest('.alert').attr('data-username', username).addClass(username);
+    $self.closest('.alert').attr('data-username', username);
     return username;
 }).toArray() );
  

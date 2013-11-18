@@ -3,3 +3,17 @@
 html {
     /* Defaults css for cssmin process */
 }
+
+.avatar-container {
+	padding-left: 30px !important;
+}
+
+.title .github-avatar {
+	position: absolute;
+	left: 32px;
+	top: 6px;
+	border-radius: 50px;
+	width: 32px;
+	height: 32px;
+	border: 2px solid rgba(0, 0, 0, 0.1);
+}
