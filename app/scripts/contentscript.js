@@ -55,3 +55,16 @@ var generateUrl = function( array, pagination ) {
 $.get( generateUrl( users, 100 ), function( data ) {
     printImages( data.items ); 
 });
+
+// overriding jQuery ajax
+// ----------------------
+// var _ajax = $.ajax
+
+// $.ajax = function( options ) {
+//   var complete = arguments[0].complete || function() {};
+//   arguments[0].complete = function() {
+//     console.log( 'completed', arguments );
+//     complete.apply(this, arguments);
+//   }
+//   _ajax.apply(this, arguments);
+// }
