@@ -34,15 +34,19 @@ var generateUrl = function( array, pagination ) {
  
 // get user names from github feed page
 // ------------------------------------
-, users = unique( $('.news .alert').not('.push').find('.title a:eq(0)').map(function() {
+, users = unique( $('.news .alert').not('.push, .avatar-ready').find('.title a:eq(0)').map(function() {
     var $self = $(this)
     , username = $self.text();
     
     $self.addClass(username);
 
     $self.parent().addClass('avatar-container')
+    
     // store username
-    $self.closest('.alert').attr('data-username', username);
+    $self.closest('.alert')
+    	.attr('data-username', username)
+    	.addClass('avatar-ready');
+    
     return username;
 }).toArray() );
  
