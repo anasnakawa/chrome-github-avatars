@@ -6,3 +6,4 @@ dist
 package
 .DS_Strore
 .pem
+*.zip
