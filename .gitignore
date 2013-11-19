@@ -5,5 +5,5 @@ dist
 .sass-cache
 package
 .DS_Strore
-.pem
+*.pem
 *.zip
