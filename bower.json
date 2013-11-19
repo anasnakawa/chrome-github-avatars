@@ -1,8 +1,7 @@
 {
-  "name": "something",
+  "name": "app",
   "version": "0.0.0",
   "dependencies": {
     "jquery": "~2.0.3"
-  },
-  "devDependencies": {}
+  }
 }
