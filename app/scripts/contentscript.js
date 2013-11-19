@@ -1,9 +1,21 @@
 'use strict';
 
+// cahcing some jQuery references
+// ------------------------------
+var $news = $('.news')
+
+// hacking into jQuery ajax to be notified 
+// once the pagination ajax completed
+, onPaginationComplete = function() {
+    getAvatarsForUsers( function( data ) {
+        printImages( data.items );
+    });
+}
+
 // generate search url for a 
 // list of github usernames
 // ------------------------
-var generateUrl = function( array, pagination ) {
+, generateUrl = function( array, pagination ) {
     for( var i in array ) {
         array[ i ] = 'user%3A' + array[ i ];
     }
@@ -19,52 +31,86 @@ var generateUrl = function( array, pagination ) {
     }
     return Object.keys( temp );
 }
+
+// get new users
+// -------------
+, prepareNewUsersOnPage = function() {
+    var users = $news.find('.alert').not('.push, .avatar-ready').find('.title a:eq(0)').map(function() {
+        var $self = $(this)
+        , username = $self.text();
+        
+        $self.addClass(username);
+
+        $self.parent().addClass('avatar-container')
+        
+        // store username
+        $self.closest('.alert')
+            .attr('data-username', username);
+        
+        return username;
+    }).toArray();
+
+    return unique( users );
+}
  
 // for debugging
 // print all users gravatars into DOM
 // ----------------------------------
 , printImages = function( items ) {
     for( var item in items ) {
-        $('<img />')
-        	.addClass('github-avatar')
-        	.attr( 'src', items[ item ].avatar_url )
-        	.prependTo( '.' + items[ item ].login );
+        var $img = $('<img />').addClass('github-avatar').attr( 'src', items[ item ].avatar_url );
+
+        $('.alert:not(.avatar-ready) .' + items[ item ].login ).each(function() {
+            var $self = $(this);
+
+            $img.clone().insertBefore( $self );
+            $self.closest( '.alert' ).addClass('avatar-ready');
+        });
     }
 }
- 
-// get user names from github feed page
-// ------------------------------------
-, users = unique( $('.news .alert').not('.push, .avatar-ready').find('.title a:eq(0)').map(function() {
-    var $self = $(this)
-    , username = $self.text();
-    
-    $self.addClass(username);
 
-    $self.parent().addClass('avatar-container')
-    
-    // store username
-    $self.closest('.alert')
-    	.attr('data-username', username)
-    	.addClass('avatar-ready');
-    
-    return username;
-}).toArray() );
+, getAvatarsForUsers = function( callback ) {
+    $.get( generateUrl( prepareNewUsersOnPage(), 31 ), callback );
+}
+
+// tricking first element in feed
+// ------------------------------
+var $first = $('.news .alert').eq(0)
+, $clone;
+
+$first.clone().insertBefore($first);
+$clone = $first.prev();
+$first.css('border', 'none');
+$clone.css({
+      height: 0
+    , padding: 0
+});
+
  
 // query github API
 // ----------------
-$.get( generateUrl( users, 100 ), function( data ) {
+getAvatarsForUsers( function( data ) { 
     printImages( data.items ); 
 });
 
-// overriding jQuery ajax
-// ----------------------
-// var _ajax = $.ajax
+// hacking into pagination calls
+// -----------------------------
+// since we don't have access to github's 
+// jQuery object, we'll do a workaround here
+$news.on('click', '.js-events-pagination', function() {
+// $('.js-events-pagination').click(function() {
+    
+    console.info('waiting for a pagination to complete');
 
-// $.ajax = function( options ) {
-//   var complete = arguments[0].complete || function() {};
-//   arguments[0].complete = function() {
-//     console.log( 'completed', arguments );
-//     complete.apply(this, arguments);
-//   }
-//   _ajax.apply(this, arguments);
-// }
+    var $button = $(this)
+    , $container = $button.parent()
+    , id = setInterval(function() {
+        if( !$container.hasClass('loading') ) {
+            clearInterval(id);
+            onPaginationComplete();
+            console.info('pagination completed');
+        } else {
+            console.info('waiting...');
+        }
+    }, 500);
+});

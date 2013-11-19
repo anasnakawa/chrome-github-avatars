@@ -34,9 +34,6 @@
       ],
       "js": [
         "bower_components/jquery/jquery.js",
-        "scripts/githome/githome.config.js",
-        "scripts/githome/githome.handlers.js",
-        "scripts/githome/githome.main.js",
         "scripts/contentscript.js"
       ],
       "run_at": "document_end",
