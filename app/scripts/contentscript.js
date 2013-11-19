@@ -53,7 +53,6 @@ var $news = $('.news')
     return unique( users );
 }
  
-// for debugging
 // print all users gravatars into DOM
 // ----------------------------------
 , printImages = function( items ) {
@@ -75,7 +74,7 @@ var $news = $('.news')
 
 // tricking first element in feed
 // ------------------------------
-var $first = $('.news .alert').eq(0)
+, $first = $('.news .alert').eq(0)
 , $clone;
 
 $first.clone().insertBefore($first);
@@ -103,7 +102,9 @@ $news.on('click', '.js-events-pagination', function() {
 
     var $button = $(this)
     , $container = $button.parent()
+
     , id = setInterval(function() {
+    
         if( !$container.hasClass('loading') ) {
             clearInterval(id);
             onPaginationComplete();
@@ -111,5 +112,6 @@ $news.on('click', '.js-events-pagination', function() {
         } else {
             console.info('waiting...');
         }
+        
     }, 500);
 });
