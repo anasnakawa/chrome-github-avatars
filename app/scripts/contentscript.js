@@ -35,7 +35,7 @@ var $news = $('.news')
 // get new users
 // -------------
 , prepareNewUsersOnPage = function() {
-    var users = $news.find('.alert').not('.push, .avatar-ready').find('.title a:eq(0)').map(function() {
+    var users = $news.find('.alert').not('.push, .public, .issues_comment, .avatar-ready').find('.title a:eq(0)').map(function() {
         var $self = $(this)
         , username = $self.text();
         
