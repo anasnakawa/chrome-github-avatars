@@ -2,16 +2,16 @@
 	position: absolute;
 	left: 0;
 	top: 6px;
-	border-radius: 50px;
+	border-radius: 4px;
 	width: 32px;
 	height: 32px;
-	border: 2px solid rgba(0, 0, 0, 0.1);
 }
+
 
 /* overriding github */
 .news .alert.avatar-ready .simple > .octicon {
 	left: 27px !important;
 	z-index: 100;
 	top: 27px;
-	text-shadow: -2px -2px 0px #FFF, -1px -1px 0px #FFF;
+	text-shadow: #FFF -1px -1px 0px;
 }
