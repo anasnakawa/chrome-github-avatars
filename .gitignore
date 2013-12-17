@@ -4,6 +4,6 @@ temp
 dist
 .sass-cache
 package
-.DS_Strore
+.DS_Store
 *.pem
 *.zip
