@@ -59,7 +59,7 @@ var $news = $('.news')
     for( var item in items ) {
         var $img = $('<img />').addClass('github-avatar').attr( 'src', items[ item ].avatar_url );
 
-        $('.alert:not(.avatar-ready) .' + items[ item ].login ).each(function() {
+        $('.alert:not(.avatar-ready,.issues_opened) .' + items[ item ].login ).each(function() {
             var $self = $(this);
 
             $img.clone().insertBefore( $self );
