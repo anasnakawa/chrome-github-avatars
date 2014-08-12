@@ -11,7 +11,7 @@
 /* overriding github */
 .news .alert.avatar-ready .simple > .octicon {
 	left: 27px !important;
-	z-index: 100;
+	z-index: 10;
 	top: 27px;
 	text-shadow: #FFF -1px -1px 0px;
 }
