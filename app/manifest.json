@@ -1,6 +1,6 @@
 {
   "name": "Avatars for Github",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "manifest_version": 2,
   "description": "Displaying user avatars in github news feed page",
   "icons": {
@@ -17,7 +17,6 @@
       "scripts/background.js"
     ]
   },
-  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
   "web_accessible_resources": [],
   "content_scripts": [
     {
