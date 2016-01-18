@@ -96,16 +96,14 @@ getAvatarsForUsers( function( data ) {
 // -----------------------------
 // since we don't have access to github's 
 // jQuery object, we'll do a workaround here
-$news.on('click', '.js-events-pagination', function() {
+var buttonSelector = '.js-events-pagination, .ajax-pagination-btn';
+$news.on('click', buttonSelector, function() {
     
     console.info('waiting for a pagination to complete');
 
-    var $button = $(this)
-    , $container = $button.parent()
-
-    , id = setInterval(function() {
-    
-        if( !$container.hasClass('loading') ) {
+    var id = setInterval(function() {
+        var $button = $( buttonSelector );
+        if( $button.closest( '.loading' ).length === 0 ) {
             clearInterval(id);
             onPaginationComplete();
             console.info('pagination completed');
@@ -115,3 +113,15 @@ $news.on('click', '.js-events-pagination', function() {
         
     }, 500);
 });
+
+// analytics
+// ---------
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-72567125-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = 'https://ssl.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
